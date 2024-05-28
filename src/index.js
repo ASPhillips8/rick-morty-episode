@@ -39,13 +39,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     characterSpecs.textContent = ""
 
-    const span = document.createElement("span")
+    const container = document.createElement("div")
+    const details = document.createElement("div")
     const h2 = document.createElement("h2")
     const statusH4 = document.createElement("h4")
     const speciesH4 = document.createElement("h4")
     const bigImg = document.createElement("img")
     const button = document.createElement("button")
 
+    container.classList.add("character-details")
+    details.classList.add("details")
     bigImg.src = `${character.image}`
     bigImg.id = "enlarged-image"
     h2.textContent = `Name: ${character.name}`
@@ -54,12 +57,15 @@ document.addEventListener("DOMContentLoaded", () => {
     speciesH4.textContent = `Species: ${character.species}`
     button.textContent = "GET ALL EPISODES"
 
-    span.appendChild(bigImg)
-    span.appendChild(h2)
-    h2.appendChild(statusH4)
-    h2.appendChild(speciesH4)
-    characterSpecs.appendChild(span)
+    details.appendChild(h2)
+    details.appendChild(statusH4)
+    details.appendChild(speciesH4)
+    container.appendChild(bigImg)
+    container.appendChild(details)
+    characterSpecs.appendChild(container)
     characterSpecs.appendChild(button)
+
+
   }
 
 })
