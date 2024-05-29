@@ -64,8 +64,5 @@ document.addEventListener("DOMContentLoaded", () => {
     container.appendChild(details)
     characterSpecs.appendChild(container)
     characterSpecs.appendChild(button)
-
-
   }
-
 })
