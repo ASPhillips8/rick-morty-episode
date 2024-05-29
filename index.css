@@ -5,6 +5,8 @@
   padding: 10px;
   gap: 10px;
   margin-bottom: 20px;
+  position: absolute;
+  top: 125px
 }
 
 .thumb-img {
@@ -87,7 +89,10 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  margin-top: 20px
+  margin-top: 100px;
+  position: relative;
+  padding: 5%;
+
 }
 
 #character-preview {
@@ -101,5 +106,22 @@ h1 {
   flex: 2;
   padding: 20px;
   border-radius: 8px;
-  background-color: aquamarine;
+  background-color: white;
+  margin-top: 100px;
+  max-height: 400px;
+  overflow-y: scroll;
+  cursor: pointer;
+}
+
+li {
+  margin: 20px
+}
+
+.ep-name {
+  color: green;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.date {
+  color: black
 }

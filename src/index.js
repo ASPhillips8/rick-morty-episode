@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("episode-form")
   const thumbCharacter = document.getElementById("character-bar")
   const characterSpecs = document.getElementById("character-preview")
+  const episodeList = document.getElementById("episode-list")
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -30,14 +31,14 @@ document.addEventListener("DOMContentLoaded", () => {
       img.classList.add("thumb-img")
       thumbCharacter.appendChild(img)
       img.addEventListener("mouseover", (event) => {showCharacter(character)
-        console.log(event.target)
-
       })
     })
   }
+
   function showCharacter(character) {
 
     characterSpecs.textContent = ""
+    episodeList.textContent = ""
 
     const container = document.createElement("div")
     const details = document.createElement("div")
@@ -46,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const speciesH4 = document.createElement("h4")
     const bigImg = document.createElement("img")
     const button = document.createElement("button")
+    let episodeUrls = character.episode
 
     container.classList.add("character-details")
     details.classList.add("details")
@@ -64,5 +66,32 @@ document.addEventListener("DOMContentLoaded", () => {
     container.appendChild(details)
     characterSpecs.appendChild(container)
     characterSpecs.appendChild(button)
+
+    button.addEventListener("click", (e) => {getEpisodes (episodeUrls)
+    })
   }
+
+  function getEpisodes(episodeUrls) {
+    episodeList.textContent = ""
+    episodeUrls.forEach((episodeUrl) => {
+      fetch(episodeUrl)
+      .then((response) => response.json())
+      .then((episodeData) => renderEpisodeList(episodeData))
+    })
+  }
+  getEpisodes()
+
+  function renderEpisodeList (episodeData) {
+    const div = document.createElement("div")
+    const li = document.createElement("li")
+
+    div.textContent = ` (${episodeData.episode}) Air Date: ${episodeData.air_date}`
+    div.classList.add("date")
+    li.textContent = `${episodeData.name}`
+    li.classList.add("ep-name")
+
+    li.appendChild(div)
+    episodeList.appendChild(li)
+  }
+
 })
