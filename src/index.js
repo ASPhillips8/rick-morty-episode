@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((response) => response.json())
     .then((character) => {
       const img = document.createElement("img")
-
       img.src = `${character.image}`
       img.alt = `${character.name}`
       img.classList.add("thumb-img")
@@ -47,7 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const speciesH4 = document.createElement("h4")
     const bigImg = document.createElement("img")
     const button = document.createElement("button")
-    let episodeUrls = character.episode
 
     container.classList.add("character-details")
     details.classList.add("details")
@@ -67,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
     characterSpecs.appendChild(container)
     characterSpecs.appendChild(button)
 
-    button.addEventListener("click", (e) => {getEpisodes (episodeUrls)
+    button.addEventListener("click", (e) => {getEpisodes (character.episode)
     })
   }
 
@@ -84,14 +82,22 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderEpisodeList (episodeData) {
     const div = document.createElement("div")
     const li = document.createElement("li")
+    const checkBox = document.createElement("input")
 
+    checkBox.type ="checkbox"
     div.textContent = ` (${episodeData.episode}) Air Date: ${episodeData.air_date}`
     div.classList.add("date")
     li.textContent = `${episodeData.name}`
     li.classList.add("ep-name")
 
+    li.appendChild(checkBox)
     li.appendChild(div)
     episodeList.appendChild(li)
   }
-
 })
+
+
+// need to create a check box for the episode
+// handle check function
+// if/else statement
+//
