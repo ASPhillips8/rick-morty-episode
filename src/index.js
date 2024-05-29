@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("episode-form")
   const thumbCharacter = document.getElementById("character-bar")
   const characterSpecs = document.getElementById("character-preview")
+  const episodeList = document.getElementById("episode-preview")
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -30,11 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
       img.classList.add("thumb-img")
       thumbCharacter.appendChild(img)
       img.addEventListener("mouseover", (event) => {showCharacter(character)
-        console.log(event.target)
-
       })
     })
   }
+
   function showCharacter(character) {
 
     characterSpecs.textContent = ""
@@ -64,5 +64,18 @@ document.addEventListener("DOMContentLoaded", () => {
     container.appendChild(details)
     characterSpecs.appendChild(container)
     characterSpecs.appendChild(button)
+
+    button.addEventListener("click", (e) => {getEpisodes (character.episode)
+      console.log(character.episode)
+    })
   }
+
+
+  function getEpisodes(episodeUrls) {
+    // episodeURLs = character.episode which is an array of urls
+    // i need to go into each url and
+
+
+  }
+  getEpisodes()
 })
