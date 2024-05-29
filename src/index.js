@@ -83,14 +83,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const div = document.createElement("div")
     const li = document.createElement("li")
     const checkBox = document.createElement("input")
+    const label = document.createElement("label")
 
     checkBox.type ="checkbox"
-    div.textContent = ` (${episodeData.episode}) Air Date: ${episodeData.air_date}`
+    checkBox.classList.add("save-checkbox")
+    div.textContent = ` (${episodeData.episode}) Air Date: ${episodeData.air_date} `
+    label.classList.add("save-label")
+    label.textContent = "Save Adventure"
     div.classList.add("date")
     li.textContent = `${episodeData.name}`
     li.classList.add("ep-name")
 
-    li.appendChild(checkBox)
+    label.prepend(checkBox)
+    div.appendChild(label)
     li.appendChild(div)
     episodeList.appendChild(li)
   }

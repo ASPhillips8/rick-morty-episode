@@ -120,8 +120,22 @@ li {
 .ep-name {
   color: green;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  margin-bottom: 10px
 }
 
 .date {
-  color: black
+  color: black;
+  margin-top: 5px;
+  padding-top: 5px;
+}
+
+#episode-list li {
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.save-label {
+  color: red;
+  font-weight: bold;
 }
