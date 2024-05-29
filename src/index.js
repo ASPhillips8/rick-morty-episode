@@ -72,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // character.episode = [ url, url ]
 
   function getEpisodes(episodeUrls) {
+    episodeList.textContent = ""
     episodeUrls.forEach((episodeUrl) => {
       fetch(episodeUrl)
       .then((response) => response.json())
@@ -81,9 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
   getEpisodes()
 
   function renderEpisodeList (episodeData) {
-
-
-
     const div = document.createElement("div")
     const li = document.createElement("li")
 
@@ -95,5 +93,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
    //episodeData is an Object = { id: name: air_date: episode  }
-    //pass in function to render list
 })
