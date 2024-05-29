@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function showCharacter(character) {
 
     characterSpecs.textContent = ""
+    episodeList.textContent = ""
 
     const container = document.createElement("div")
     const details = document.createElement("div")
@@ -46,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const speciesH4 = document.createElement("h4")
     const bigImg = document.createElement("img")
     const button = document.createElement("button")
+    let episodeUrls = character.episode
 
     container.classList.add("character-details")
     details.classList.add("details")
@@ -65,11 +67,9 @@ document.addEventListener("DOMContentLoaded", () => {
     characterSpecs.appendChild(container)
     characterSpecs.appendChild(button)
 
-    button.addEventListener("click", (e) => {getEpisodes (character.episode)
+    button.addEventListener("click", (e) => {getEpisodes (episodeUrls)
     })
   }
-
-  // character.episode = [ url, url ]
 
   function getEpisodes(episodeUrls) {
     episodeList.textContent = ""
@@ -90,7 +90,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     li.appendChild(div)
     episodeList.appendChild(li)
-
   }
-   //episodeData is an Object = { id: name: air_date: episode  }
+
 })
