@@ -73,7 +73,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function getEpisodes(episodeUrls) {
     // episodeURLs = character.episode which is an array of urls
-    // i need to go into each url and
+    episodeUrls.forEach((episodeUrl) => {
+      fetch(episodeUrl)
+      .then((response) => response.json())
+      .then((episodeData) => console.log(episodeData))
+    })
+    // i need to go into each url and get episode
+    // use forEach
+    //fetch
+    //episodeData is an Object = { id: name: air_date: episode  }
+    //pass in function to render list
 
 
   }
