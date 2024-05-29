@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("episode-form")
   const thumbCharacter = document.getElementById("character-bar")
   const characterSpecs = document.getElementById("character-preview")
-  const episodeList = document.getElementById("episode-preview")
+  const episodeList = document.getElementById("episode-list")
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -66,25 +66,34 @@ document.addEventListener("DOMContentLoaded", () => {
     characterSpecs.appendChild(button)
 
     button.addEventListener("click", (e) => {getEpisodes (character.episode)
-      console.log(character.episode)
     })
   }
 
+  // character.episode = [ url, url ]
 
   function getEpisodes(episodeUrls) {
-    // episodeURLs = character.episode which is an array of urls
     episodeUrls.forEach((episodeUrl) => {
       fetch(episodeUrl)
       .then((response) => response.json())
-      .then((episodeData) => console.log(episodeData))
+      .then((episodeData) => renderEpisodeList(episodeData))
     })
-    // i need to go into each url and get episode
-    // use forEach
-    //fetch
-    //episodeData is an Object = { id: name: air_date: episode  }
-    //pass in function to render list
-
-
   }
   getEpisodes()
+
+  function renderEpisodeList (episodeData) {
+
+
+
+    const div = document.createElement("div")
+    const li = document.createElement("li")
+
+    div.textContent = ` (${episodeData.episode}) Air Date: ${episodeData.air_date}`
+    li.textContent = `${episodeData.name}`
+
+    li.appendChild(div)
+    episodeList.appendChild(li)
+
+  }
+   //episodeData is an Object = { id: name: air_date: episode  }
+    //pass in function to render list
 })
