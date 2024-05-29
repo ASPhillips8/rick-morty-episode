@@ -86,7 +86,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const li = document.createElement("li")
 
     div.textContent = ` (${episodeData.episode}) Air Date: ${episodeData.air_date}`
+    div.classList.add("date")
     li.textContent = `${episodeData.name}`
+    li.classList.add("ep-name")
 
     li.appendChild(div)
     episodeList.appendChild(li)
