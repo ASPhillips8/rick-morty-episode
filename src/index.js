@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("episode-form")
   const thumbCharacter = document.getElementById("character-bar")
-  const characterSpecs = document.getElementById("preview-container")
+  const characterSpecs = document.getElementById("character-preview")
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
