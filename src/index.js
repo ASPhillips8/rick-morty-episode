@@ -5,13 +5,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const episodeList = document.getElementById("episode-list")
   const saveEpisode = document.querySelector("#saved-episodes")
 
-  loadSaveEpisode()
+  let savedEpisodeNames = new Set();
+
+
+  // loadSaveEpisode()
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const episodeInput = document.getElementById("season-episode").value
-    const url = `https://rickandmortyapi.com/api/episode/?episode=${episodeInput}`
+    const seasonEpisodeInput = document.getElementById("season-episode").value
+    const url = `https://rickandmortyapi.com/api/episode/?episode=${seasonEpisodeInput}`
 
     thumbCharacter.innerText = ""
 
@@ -97,11 +100,15 @@ document.addEventListener("DOMContentLoaded", () => {
     episodeList.appendChild(li)
 
     saveButton.addEventListener("click", () => {
-      saveEpisodeData(apiEpisodeData)
+      saveEpisodeData(apiEpisodeData,)
     })
   }
 
   function saveEpisodeData(apiEpisodeData) {
+
+    if (savedEpisodeNames.has(apiEpisodeData.name)) {
+      return;
+    }
 
     let episodesData = {
       name: apiEpisodeData.name,
@@ -117,7 +124,10 @@ document.addEventListener("DOMContentLoaded", () => {
       body: JSON.stringify(episodesData)
     })
     .then(response => response.json())
-    .then(episodeData => renderSaveEpisode(episodeData))
+    .then(episodeData => {
+      renderSaveEpisode(episodeData)
+      savedEpisodeNames.add(episodeData.name)
+    })
     .catch(error => console.error('Error saving episode:', error));
   }
 
@@ -135,8 +145,6 @@ document.addEventListener("DOMContentLoaded", () => {
     delButton.addEventListener("click", () => deleteEpisode(episodesData.id))
 
   }
-  // / need to use event form function above to delete
-
 
   function deleteEpisode(id) {
     fetch(`http://localhost:3000/episodes/${id}`, {
@@ -156,8 +164,13 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch('http://localhost:3000/episodes')
       .then(response => response.json())
       .then(episodes => {
-        episodes.forEach(episode => renderSaveEpisode(episode));
+        episodes.forEach(episode => {
+          renderSaveEpisode(episode)
+          savedEpisodeNames.add(episode.name);
+        })
       })
       .catch(error => console.error('Error fetching saved episodes:', error));
   }
+  loadSaveEpisode()
+
 })
