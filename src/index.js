@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const thumbCharacter = document.getElementById("character-bar")
   const characterSpecs = document.getElementById("character-preview")
   const episodeList = document.getElementById("episode-list")
+  const saveEpisode = document.querySelector("#saved-episodes")
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -77,32 +78,43 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((episodeData) => renderEpisodeList(episodeData))
     })
   }
-  getEpisodes()
+  // getEpisodes()
 
   function renderEpisodeList (episodeData) {
     const div = document.createElement("div")
     const li = document.createElement("li")
-    const checkBox = document.createElement("input")
-    const label = document.createElement("label")
+    const saveButton = document.createElement("button")
 
-    checkBox.type ="checkbox"
-    checkBox.classList.add("save-checkbox")
+    saveButton.classList.add("save-button")
+    saveButton.textContent = "Save Adventure"
     div.textContent = ` (${episodeData.episode}) Air Date: ${episodeData.air_date} `
-    label.classList.add("save-label")
-    label.textContent = "Save Adventure"
     div.classList.add("date")
     li.textContent = `${episodeData.name}`
     li.classList.add("ep-name")
 
-    label.prepend(checkBox)
-    div.appendChild(label)
+    div.appendChild(saveButton)
     li.appendChild(div)
     episodeList.appendChild(li)
+
+    saveButton.addEventListener("click", () => {
+      renderSaveEpisode(episodeData)
+    })
+  }
+
+  function renderSaveEpisode (episodeData) {
+    const li = document.createElement("li")
+    const delButton = document.createElement("button")
+
+    li.textContent = `${episodeData.name}`
+    delButton.textContent = "Remove"
+
+    li.appendChild(delButton)
+    saveEpisode.appendChild(li)
   }
 })
 
 
-// need to create a check box for the episode
+// figure out value when checked
 // handle check function
 // if/else statement
-//
+// pass value on
