@@ -27,7 +27,7 @@ When a character's picture is clicked, it displays an organized list of all epis
 ## Feature 4: Mark All Episodes that I Want to Watch (Stretch Goal)
 
 **User Story**
-As a user, I want to mark each episode that I want to watch in the future.
+As a user, I want to save each episode that I want to watch in the future.
 
 **Details**
-Enable a checkbox that, when marked, changes the style and color of the listed item.
+Enable a save button that when clicked will add episode to watch later list that will persist in app. This can be accomplished with click event.
