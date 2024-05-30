@@ -97,8 +97,21 @@ document.addEventListener("DOMContentLoaded", () => {
     episodeList.appendChild(li)
 
     saveButton.addEventListener("click", () => {
-      renderSaveEpisode(episodeData)
+      saveEpisodeData(episodeData)
     })
+  }
+
+  function saveEpisodeData(episodeData) {
+    fetch('http://localhost:3000/episodes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(episodeData)
+    })
+    .then(response => response.json())
+    .then(data => renderSaveEpisode(episodeData))
+    .catch(error => console.error('Error saving episode:', error));
   }
 
   function renderSaveEpisode (episodeData) {
@@ -115,10 +128,6 @@ document.addEventListener("DOMContentLoaded", () => {
       saveEpisode.removeChild(li)
     })
   }
+
 })
 
-
-// figure out value when checked
-// handle check function
-// if/else statement
-// pass value on
