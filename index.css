@@ -59,6 +59,9 @@ body {
   height: 100vh;
   margin: 0;
   font-family: Arial, sans-serif;
+  background-image: url("https://w0.peakpx.com/wallpaper/607/677/HD-wallpaper-rick-and-morty-adult-adult-swim-anima-cartoon-cartoon-network-funny-haha-lol-milky-milky-way-network-outer-space-outerspace-planets-pretty-sky-solar-solar-system-space-star-stars.jpg");
+  background-size: cover;
+  background-position: center;
 }
 
 h1 {
@@ -106,7 +109,7 @@ h1 {
   flex: 2;
   padding: 20px;
   border-radius: 8px;
-  background-color: white;
+  /* background-color: white; */
   margin-top: 100px;
   max-height: 400px;
   overflow-y: scroll;
@@ -118,13 +121,15 @@ li {
 }
 
 .ep-name {
-  color: green;
+  color: rgb(74, 236, 74);
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  margin-bottom: 10px
+  margin-bottom: 10px;
+  font-weight: bold;
+
 }
 
 .date {
-  color: black;
+  color: rgb(236, 214, 43);
   margin-top: 5px;
   padding-top: 5px;
 }
@@ -139,4 +144,24 @@ li {
   color: red;
   font-weight: bold;
   background-color: #4CAF50;
+}
+
+.char-name {
+  color: yellowgreen;
+  font-family: fantasy;
+  font-weight: bold;
+}
+
+h4 {
+  color: yellow;
+}
+
+.save-ep {
+  color: whitesmoke
+}
+
+h2 {
+  color:darkturquoise;
+  text-align: center;
+
 }
