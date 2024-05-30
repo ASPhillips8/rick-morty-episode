@@ -105,7 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function saveEpisodeData(apiEpisodeData) {
-
     if (savedEpisodeNames.has(apiEpisodeData.name)) {
       return;
     }
@@ -157,6 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((response) => response.json())
     .then((data) => {
       document.getElementById(data.id).remove()
+      savedEpisodeNames.delete(data.name)
     })
   }
 
@@ -171,6 +171,6 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .catch(error => console.error('Error fetching saved episodes:', error));
   }
-  loadSaveEpisode()
 
+  loadSaveEpisode()
 })
