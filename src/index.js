@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const thumbCharacter = document.getElementById("character-bar")
   const characterSpecs = document.getElementById("character-preview")
   const episodeList = document.getElementById("episode-list")
+  const saveEpisode = document.querySelector("#saved-episodes")
+
+  loadSaveEpisode()
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -25,12 +28,11 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((response) => response.json())
     .then((character) => {
       const img = document.createElement("img")
-
       img.src = `${character.image}`
       img.alt = `${character.name}`
       img.classList.add("thumb-img")
       thumbCharacter.appendChild(img)
-      img.addEventListener("mouseover", (event) => {showCharacter(character)
+      img.addEventListener("mouseover", () => {showCharacter(character)
       })
     })
   }
@@ -47,7 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const speciesH4 = document.createElement("h4")
     const bigImg = document.createElement("img")
     const button = document.createElement("button")
-    let episodeUrls = character.episode
 
     container.classList.add("character-details")
     details.classList.add("details")
@@ -67,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
     characterSpecs.appendChild(container)
     characterSpecs.appendChild(button)
 
-    button.addEventListener("click", (e) => {getEpisodes (episodeUrls)
+    button.addEventListener("click", (e) => {getEpisodes (character.episode)
     })
   }
 
@@ -79,19 +80,65 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((episodeData) => renderEpisodeList(episodeData))
     })
   }
-  getEpisodes()
 
   function renderEpisodeList (episodeData) {
     const div = document.createElement("div")
     const li = document.createElement("li")
+    const saveButton = document.createElement("button")
 
-    div.textContent = ` (${episodeData.episode}) Air Date: ${episodeData.air_date}`
+    saveButton.classList.add("save-button")
+    saveButton.textContent = "Save Adventure"
+    div.textContent = ` (${episodeData.episode}) Air Date: ${episodeData.air_date} `
     div.classList.add("date")
     li.textContent = `${episodeData.name}`
     li.classList.add("ep-name")
 
+    div.appendChild(saveButton)
     li.appendChild(div)
     episodeList.appendChild(li)
+
+    saveButton.addEventListener("click", () => {
+      saveEpisodeData(episodeData)
+    })
   }
+
+  function saveEpisodeData(episodeData) {
+    fetch('http://localhost:3000/episodes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(episodeData)
+    })
+    .then(response => response.json())
+    .then(data => renderSaveEpisode(episodeData))
+    .catch(error => console.error('Error saving episode:', error));
+  }
+
+  function renderSaveEpisode (episodeData) {
+    const li = document.createElement("li")
+    const delButton = document.createElement("button")
+
+    li.textContent = `${episodeData.name}`
+    delButton.textContent = "Remove"
+
+    li.appendChild(delButton)
+    saveEpisode.appendChild(li)
+
+    delButton.addEventListener("click", () => {
+      saveEpisode.removeChild(li)
+    })
+  }
+
+  function loadSaveEpisode() {
+    fetch('http://localhost:3000/episodes')
+      .then(response => response.json())
+      .then(episodes => {
+        episodes.forEach(episode => renderSaveEpisode(episode));
+      })
+      .catch(error => console.error('Error fetching saved episodes:', error));
+  }
+
+// display save episode on page load
 
 })
