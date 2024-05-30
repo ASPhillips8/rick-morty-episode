@@ -135,7 +135,8 @@ li {
   border-bottom: 1px solid #ddd;
 }
 
-.save-label {
+.save-button {
   color: red;
   font-weight: bold;
+  background-color: #4CAF50;
 }

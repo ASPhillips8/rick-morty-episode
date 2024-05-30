@@ -110,6 +110,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     li.appendChild(delButton)
     saveEpisode.appendChild(li)
+
+    delButton.addEventListener("click", () => {
+      saveEpisode.removeChild(li)
+    })
   }
 })
 
