@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const episodeList = document.getElementById("episode-list")
   const saveEpisode = document.querySelector("#saved-episodes")
 
+  loadSaveEpisode()
+
   form.addEventListener("submit", (event) => {
     event.preventDefault();
 
@@ -30,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
       img.alt = `${character.name}`
       img.classList.add("thumb-img")
       thumbCharacter.appendChild(img)
-      img.addEventListener("mouseover", (event) => {showCharacter(character)
+      img.addEventListener("mouseover", () => {showCharacter(character)
       })
     })
   }
@@ -78,7 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((episodeData) => renderEpisodeList(episodeData))
     })
   }
-  // getEpisodes()
 
   function renderEpisodeList (episodeData) {
     const div = document.createElement("div")
@@ -129,5 +130,15 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   }
 
-})
+  function loadSaveEpisode() {
+    fetch('http://localhost:3000/episodes')
+      .then(response => response.json())
+      .then(episodes => {
+        episodes.forEach(episode => renderSaveEpisode(episode));
+      })
+      .catch(error => console.error('Error fetching saved episodes:', error));
+  }
 
+// display save episode on page load
+
+})
