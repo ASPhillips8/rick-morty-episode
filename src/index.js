@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let characters = apiEpisodeData.results[0].characters
       characters.forEach((characterUrl) => renderCharacters(characterUrl))
     })
+    .catch(error => alert('Error getting characters:', error.message))
   })
 
   function renderCharacters(characterUrl) {
@@ -35,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
       img.addEventListener("mouseover", () => {showCharacter(character)
       })
     })
+    .catch(error => alert('Error showing Characters:', error.message))
   }
 
   function showCharacter(character) {
@@ -77,6 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
       fetch(episodeUrl)
       .then((response) => response.json())
       .then((apiEpisodeData) => renderEpisodeList(apiEpisodeData))
+      .catch(error => alert('Error getting episode:', error.message))
     })
   }
 
@@ -124,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
       renderSaveEpisode(episodeData)
       savedEpisodeNames.add(episodeData.name)
     })
-    .catch(error => console.error('Error saving episode:', error));
+    .catch(error => alert('Error saving episode:', error.message));
   }
 
   function renderSaveEpisode (episodesData) {
@@ -151,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
           savedEpisodeNames.add(episode.name);
         })
       })
-      .catch(error => console.error('Error fetching saved episodes:', error));
+      .catch(error => alert('Error fetching saved episodes:', error.message));
   }
 
   loadSaveEpisode()
@@ -169,5 +172,6 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById(data.id).remove()
       savedEpisodeNames.delete(data.name)
     })
+    .catch(error => alert('Error deleting episode:', error.message))
   }
 })
