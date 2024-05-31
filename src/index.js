@@ -4,21 +4,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const characterSpecs = document.getElementById("character-preview")
   const episodeList = document.getElementById("episode-list")
   const saveEpisode = document.querySelector("#saved-episodes")
+  const userUrl = 'http://localhost:3000/episodes'
 
-  loadSaveEpisode()
+  let savedEpisodeNames = new Set();
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-
-    const episodeInput = document.getElementById("season-episode").value
-    const url = `https://rickandmortyapi.com/api/episode/?episode=${episodeInput}`
-
     thumbCharacter.innerText = ""
+
+    const seasonEpisodeInput = document.getElementById("season-episode").value
+    const url = `https://rickandmortyapi.com/api/episode/?episode=${seasonEpisodeInput}`
 
     fetch(url)
     .then((response) => response.json())
-    .then((episodeData) => {
-      let characters = episodeData.results[0].characters
+    .then((apiEpisodeData) => {
+      let characters = apiEpisodeData.results[0].characters
       characters.forEach((characterUrl) => renderCharacters(characterUrl))
     })
   })
@@ -38,7 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function showCharacter(character) {
-
     characterSpecs.textContent = ""
     episodeList.textContent = ""
 
@@ -55,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     bigImg.src = `${character.image}`
     bigImg.id = "enlarged-image"
     h2.textContent = `Name: ${character.name}`
-    h2.id = "char-name"
+    h2.classList.add("char-name")
     statusH4.textContent = `Status: ${character.status}`
     speciesH4.textContent = `Species: ${character.species}`
     button.textContent = "GET ALL EPISODES"
@@ -77,20 +76,20 @@ document.addEventListener("DOMContentLoaded", () => {
     episodeUrls.forEach((episodeUrl) => {
       fetch(episodeUrl)
       .then((response) => response.json())
-      .then((episodeData) => renderEpisodeList(episodeData))
+      .then((apiEpisodeData) => renderEpisodeList(apiEpisodeData))
     })
   }
 
-  function renderEpisodeList (episodeData) {
+  function renderEpisodeList (apiEpisodeData) {
     const div = document.createElement("div")
     const li = document.createElement("li")
     const saveButton = document.createElement("button")
 
     saveButton.classList.add("save-button")
     saveButton.textContent = "Save Adventure"
-    div.textContent = ` (${episodeData.episode}) Air Date: ${episodeData.air_date} `
+    div.textContent = ` (${apiEpisodeData.episode}) Air Date: ${apiEpisodeData.air_date} `
     div.classList.add("date")
-    li.textContent = `${episodeData.name}`
+    li.textContent = `${apiEpisodeData.name}`
     li.classList.add("ep-name")
 
     div.appendChild(saveButton)
@@ -98,47 +97,77 @@ document.addEventListener("DOMContentLoaded", () => {
     episodeList.appendChild(li)
 
     saveButton.addEventListener("click", () => {
-      saveEpisodeData(episodeData)
+      saveEpisodeData(apiEpisodeData,)
     })
   }
 
-  function saveEpisodeData(episodeData) {
-    fetch('http://localhost:3000/episodes', {
+  function saveEpisodeData(apiEpisodeData) {
+    if (savedEpisodeNames.has(apiEpisodeData.name)) {
+      return;
+    }
+
+    let episodesData = {
+      name: apiEpisodeData.name,
+      episode: apiEpisodeData.episode,
+      date: apiEpisodeData.air_date
+    }
+
+    fetch(userUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(episodeData)
+      body: JSON.stringify(episodesData)
     })
     .then(response => response.json())
-    .then(data => renderSaveEpisode(episodeData))
+    .then(episodeData => {
+      renderSaveEpisode(episodeData)
+      savedEpisodeNames.add(episodeData.name)
+    })
     .catch(error => console.error('Error saving episode:', error));
   }
 
-  function renderSaveEpisode (episodeData) {
+  function renderSaveEpisode (episodesData) {
     const li = document.createElement("li")
+    li.id = episodesData.id
     const delButton = document.createElement("button")
 
-    li.textContent = `${episodeData.name}`
+    li.textContent = `${episodesData.name}`
+    li.classList.add("save-ep")
     delButton.textContent = "Remove"
 
     li.appendChild(delButton)
     saveEpisode.appendChild(li)
 
-    delButton.addEventListener("click", () => {
-      saveEpisode.removeChild(li)
-    })
+    delButton.addEventListener("click", () => deleteEpisode(episodesData.id))
   }
 
   function loadSaveEpisode() {
-    fetch('http://localhost:3000/episodes')
+    fetch(userUrl)
       .then(response => response.json())
       .then(episodes => {
-        episodes.forEach(episode => renderSaveEpisode(episode));
+        episodes.forEach(episode => {
+          renderSaveEpisode(episode)
+          savedEpisodeNames.add(episode.name);
+        })
       })
       .catch(error => console.error('Error fetching saved episodes:', error));
   }
 
-// display save episode on page load
+  loadSaveEpisode()
 
+  function deleteEpisode(id) {
+    fetch(`http://localhost:3000/episodes/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      document.getElementById(data.id).remove()
+      savedEpisodeNames.delete(data.name)
+    })
+  }
 })
