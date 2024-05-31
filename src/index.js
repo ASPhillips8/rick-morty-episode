@@ -4,8 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const characterSpecs = document.getElementById("character-preview")
   const episodeList = document.getElementById("episode-list")
   const saveEpisode = document.querySelector("#saved-episodes")
-  const seasonEpisodeInput = document.getElementById("season-episode").value
-  const url = `https://rickandmortyapi.com/api/episode/?episode=${seasonEpisodeInput}`
   const userUrl = 'http://localhost:3000/episodes'
 
   let savedEpisodeNames = new Set();
@@ -13,6 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     thumbCharacter.innerText = ""
+
+    const seasonEpisodeInput = document.getElementById("season-episode").value
+    const url = `https://rickandmortyapi.com/api/episode/?episode=${seasonEpisodeInput}`
 
     fetch(url)
     .then((response) => response.json())
@@ -139,7 +140,6 @@ document.addEventListener("DOMContentLoaded", () => {
     saveEpisode.appendChild(li)
 
     delButton.addEventListener("click", () => deleteEpisode(episodesData.id))
-
   }
 
   function loadSaveEpisode() {
